@@ -3,10 +3,10 @@
     "target": "es6",
     "moduleResolution": "node",
     "module": "commonjs",
-    "outDir": "build",
+    "outDir": "build/static",
     "rootDir": "./",
    "esModuleInterop": true,
-   "types": [] 
+   "types": []
   },
   "exclude": [
     "node_modules"

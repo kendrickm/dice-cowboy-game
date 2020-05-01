@@ -11,8 +11,8 @@
     "clean": "rimraf build/*",
     "copy-assets": "ts-node tools/copyAssets",
     "tsc": "tsc",
-    "build": "npm-run-all clean copy-assets tsc",
-    "prestart": "npm-run-all build",
+    "build": "npm-run-all clean tsc",
+    "prestart": "npm-run-all build copy-assets",
     "start": "node build/index"
   },
   "author": "Kendrick Martin <kmartinix@gmail.com>",
