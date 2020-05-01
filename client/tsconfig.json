@@ -6,7 +6,7 @@
     "outDir": "build",
     "rootDir": "./",
    "esModuleInterop": true,
-   "types": []
+   "types": [] 
   },
   "exclude": [
     "node_modules"
