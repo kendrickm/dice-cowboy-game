@@ -18,7 +18,7 @@
     "@types/chai-spies": "0.0.0",
     "@types/fs-extra": "^8.1.0",
     "@types/mocha": "^2.2.39",
-    "@types/node": "0.0.2",
+    "@types/node": "^13.13.4",
     "@types/node-uuid": "0.0.28",
     "@types/shelljs": "^0.8.7",
     "@types/ws": "0.0.37",
