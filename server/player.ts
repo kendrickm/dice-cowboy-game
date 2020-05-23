@@ -2,12 +2,13 @@ import { v4 } from 'node-uuid';
 
 export interface PlayerOptions {
     ws: any,
-    name: string
+    name: string,
 }
 
 export interface PlayerSerialized {
     id: string,
-    name: string
+    name: string,
+    leader: boolean
 }
 
 export default class Player {
@@ -16,18 +17,25 @@ export default class Player {
     public ws: any;
     public name: string;
     public room: any;
+    public leader: boolean;
 
     constructor(options: PlayerOptions) {
         this.id = v4();
         this.ws = options.ws;
         this.name = options.name;
+        this.leader = false;
     }
 
     serialize(): PlayerSerialized {
         return {
             id: this.id,
-            name: this.name
+            name: this.name,
+            leader: this.leader
         };
+    }
+
+    setLeader(leader: boolean){
+      this.leader = leader;
     }
 
     /**
@@ -38,7 +46,7 @@ export default class Player {
     static extractName(url: string, charLimit?: number): string {
         const index = url.lastIndexOf('?');
         const name = index >= 0 ? url.substr(index+1, charLimit) : '';
-        
+
         if (name.length === 0) {
             return 'Anonymous ' + Math.round(Math.random() * 1000);
         }

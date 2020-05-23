@@ -10,7 +10,7 @@ import GameState from '../game-state';
  */
 export default class InProgressState extends GameState {
 
-    private timerID: NodeJS.Timer;
+    // private timerID: NodeJS.Timer;
 
     enterState() {
         this.gameRoom.setGameData({
@@ -19,14 +19,14 @@ export default class InProgressState extends GameState {
             score: {},
             winners: {}
         });
-        this.timerID = setTimeout(() => this.roundFinished(), this.gameRoom.gameData.roundDuration);
+        // this.timerID = setTimeout(() => this.roundFinished(), this.gameRoom.gameData.roundDuration);
     }
 
     playerLeft(player: Player) {
         super.playerLeft(player);
 
         if (this.gameRoom.playerCount < 2) {
-            clearTimeout(this.timerID);
+            // clearTimeout(this.timerID);
             this.gameRoom.setState(GAME_STATE_WAITING);
         } else {
             this.checkForRoundEnd();
@@ -58,7 +58,7 @@ export default class InProgressState extends GameState {
         console.log("vs")
         console.log(this.gameRoom.playerCount)
         if (Object.keys(this.gameRoom.gameData.score).length === this.gameRoom.playerCount) {
-            clearTimeout(this.timerID);
+            // clearTimeout(this.timerID);
             console.log("We decided the round is over")
             this.roundFinished();
         }

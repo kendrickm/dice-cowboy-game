@@ -10,6 +10,7 @@ export const GAME_STATE_DEALING = 'GAME_STATE_DEALING';
 export const GAME_STATE_IN_PROGRESS = 'GAME_STATE_IN_PROGRESS';
 
 // Commands sent by the client
+export const CMD_SET_PLAYERS = 'CMD_SET_PLAYERS';
 export const CMD_PICK_SEAT = 'CMD_PICK_SEAT';
 export const CMD_ROLL_DICE = 'CMD_ROLL_DICE';
 export const CMD_SAVE_DICE = 'CMD_SAVE_DICE';

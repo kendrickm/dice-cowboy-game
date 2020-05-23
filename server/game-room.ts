@@ -1,15 +1,13 @@
 import GameState from './game-state';
 import Player, { PlayerSerialized } from './player';
 import * as actions from './actions';
-
+import { GAME_STATE_SETUP} from './constants';
 
 export interface StateMap {
     [stateName: string]: GameState
 }
 
 export interface GameRoomOptions {
-    maxPlayers: number;
-    roundDuration: number;
     defaultState: string;
     stateFactory: (gameRoom: GameRoom) => StateMap;
 }
@@ -21,9 +19,9 @@ export interface DiceScore {
 
 export interface GameData {
     round?: number;
-    roundDuration?: number;
     roundStarted?: number;
     numberOfDice?: number;
+    numberOfPlayers?: number;
     score?: {
         [playerId: number]: DiceScore
     };
@@ -56,16 +54,15 @@ export default class GameRoom {
     public stateName: string;
 
     constructor(options: GameRoomOptions) {
-        this.maxPlayers = options.maxPlayers;
         this.players = [];
         this.states = options.stateFactory(this);
         this.gameData = {
             round: 0,
-            roundDuration: options.roundDuration,
             roundStarted: null,
             numberOfDice: 0,
             score: {},
-            winners: {}
+            winners: {},
+            numberOfPlayers: 0
         };
         this.state = null;
         this.stateName = '';
@@ -97,7 +94,10 @@ export default class GameRoom {
      * @throws {Error} Will throw an error on attempts to add a new player when the room is full
      */
     addPlayer(player: Player) {
-        if (!this.hasAvailableSlots) {
+        if (this.players.length == 0){ //First player to join becomes the leader
+          player.setLeader(true)
+          console.log("WE have a leader")
+        } else if (!this.isAvailable) { //Room isn't empty, but not ready for players. Shouldn't reach this state
             throw new Error('The room is full');
         }
 
@@ -162,8 +162,8 @@ export default class GameRoom {
     /**
      * Checks if a new player can be added to the room
      */
-    get hasAvailableSlots(): boolean {
-        return this.playerCount < this.maxPlayers;
+    get isAvailable(): boolean {
+        return this.stateName != GAME_STATE_SETUP
     }
 
     get playerCount(): number {

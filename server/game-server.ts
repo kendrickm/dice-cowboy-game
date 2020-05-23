@@ -1,5 +1,5 @@
 import GameRoom from './game-room';
-
+// import GameWaitingRoom from './game-waitingroom'
 
 export interface GameRoomFactory {
     (): GameRoom;
@@ -16,6 +16,7 @@ export default class GameServer {
 
     private roomFactory: GameRoomFactory;
     private rooms: GameRoom[];
+    // private waitingRoom: GameWaitingRoom;
 
     constructor(options: IGameServerOptions) {
         this.roomFactory = options.roomFactory;
@@ -23,11 +24,16 @@ export default class GameServer {
     }
 
     /**
+    * TODO: Create a waiting area so new players are just creating a new room.
+    * New players get added to our waiting room which handles either creating a new room or waiting for a player to join
+    */
+
+    /**
      * Finds an existing room or creates a brand new one
      */
     findAvailableRoom(): GameRoom {
         for (let room of this.rooms) {
-            if (room.hasAvailableSlots) {
+            if (room.isAvailable) {
                 return room;
             }
         }

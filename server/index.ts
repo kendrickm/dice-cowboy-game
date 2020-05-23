@@ -9,8 +9,6 @@ import GameServer from './game-server';
 
 
 const roomFactory = () => new GameRoom({
-    maxPlayers: config.playersPerRoom,
-    roundDuration: config.roundDuration,
     defaultState: GAME_STATE_SETUP,
     stateFactory: (gameRoom: GameRoom) => ({
         [GAME_STATE_SETUP]: new SetupState(gameRoom),
@@ -51,13 +49,17 @@ wss.on('connection', function(ws) {
     const name = Player.extractName(ws.upgradeReq.url, config.playerNameMaxLength);
     const player = new Player({ ws, name });
 
-    gameServer.findAvailableRoom().addPlayer(player);
 
-    ws.on('message', function(message) {
-        console.log('Recieved message ', message)
-        player.room.processMessage(message, player);
-    });
-
+    try {
+      gameServer.findAvailableRoom().addPlayer(player);
+      ws.on('message', function(message) {
+          console.log('Recieved message ', message)
+          player.room.processMessage(message, player);
+      });
+    }
+    catch(err){
+      console.log(err)
+    }
     ws.on('close', function() {
         const room = player.room;
         room.removePlayer(player);
