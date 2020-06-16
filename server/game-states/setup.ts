@@ -6,20 +6,20 @@ import GameState from '../game-state';
 
 
 /**
- * Waits for the player to select the amount of dice to play with. Transitions to the WAITING state afterwards
+ * First player is denoted as leader.
+ * This player must set the desired player count, this transitions to the
  */
+
 export default class SetupState extends GameState {
 
     processMessage(message: Message, sender: Player) {
-        console.log("Got message!")
         // Make sure it's coming from the host
         if (!sender.leader) {
-            console.log("Only the leader should be here")
+            console.log("ERROR: Only the leader should be here")
             return;
         }
 
         if (message.type === CMD_SET_PLAYERS) {
-            console.log("Leader is setting the number of players")
             const numberOfPlayers= parseInt(message.payload, 10);
 
             if (inRange(numberOfPlayers, 3, 8)) {

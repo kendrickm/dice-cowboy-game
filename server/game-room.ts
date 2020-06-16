@@ -46,7 +46,6 @@ export interface Message {
  */
 export default class GameRoom {
 
-    public maxPlayers: number;
     public players: Player[];
     public states: StateMap;
     public gameData: GameData;

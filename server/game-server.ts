@@ -24,7 +24,7 @@ export default class GameServer {
     }
 
     /**
-    * TODO: Create a waiting area so new players are just creating a new room.
+    * TODO: Create a waiting area so new players aren't just creating a new room.
     * New players get added to our waiting room which handles either creating a new room or waiting for a player to join
     */
 

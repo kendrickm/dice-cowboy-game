@@ -6,7 +6,7 @@ import GameState from '../game-state';
 
 
 /**
- * Waits for more players to join before transitioning to the READY state
+ * Waits for enough players to join before transitioning to the READY state
  */
 export default class WaitingState extends GameState {
 
@@ -28,7 +28,7 @@ export default class WaitingState extends GameState {
      * Transition to the READY state once there are enough players in the room
      */
     checkIfEnoughPlayers() {
-        if (this.gameRoom.playerCount >= 2) {
+        if (this.gameRoom.playerCount == this.gameRoom.gameData.numberOfPlayers) {
             this.gameRoom.setState(GAME_STATE_READY);
         }
     }
